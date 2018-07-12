@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "jsx": "react",
+        "importHelpers": true,
+        "experimentalDecorators": true,
+        "noUnusedLocals": true,
+        "lib": ["dom", "es2015"]
+    }
+}
