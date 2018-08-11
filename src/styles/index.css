@@ -1,8 +1,15 @@
+$brown: #8f5902;
+$blue: #729fcf;
+$grey: #eeeeec;
+$yellow: #fce94f;
+$grey2: #babdb6;
+
 html,
 body,
 #root {
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .wrapper {
@@ -21,35 +28,37 @@ body,
     display: flex;
 }
 
-.fov {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
 .cell {
-    width: 20px;
-    height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    line-height: 20px;
+    white-space: nowrap;
 
     &_fov-light {
         background-color: rgba(255, 250, 51, 0.15);
     }
 
     &_fov-shadow {
-        background-color: rgba(140, 140, 140, 0.5);
+        background-color: rgba(111, 111, 111, 0.5);
     }
 
     &_wall {
-        background-color: black;
+        background-color: $brown;
     }
 
-    &_nothing {
-        opacity: 0.1;
+    &_floor {
+        background-color: white;
+    }
+
+    &-container {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
     }
 }

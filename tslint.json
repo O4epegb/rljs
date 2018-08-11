@@ -1,3 +1,6 @@
 {
-    "extends": "@danila/tslint-config"
+    "extends": "@danila/tslint-config",
+    "rules": {
+        "no-shadowed-variable": false
+    }
 }

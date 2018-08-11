@@ -1,5 +1,8 @@
-export const width = 20;
-export const height = 20;
+export const screenWidth = 20;
+export const screenHeight = 20;
+
+export const mapWidth = 20;
+export const mapHeight = 80;
 
 export const keyMap = {
     104: 0,
