@@ -37,10 +37,7 @@ module.exports = {
                         loader: 'style-loader'
                     },
                     {
-                        loader: 'css-loader',
-                        options: {
-                            minimize: true
-                        }
+                        loader: 'css-loader'
                     },
                     {
                         loader: 'postcss-loader',
@@ -57,7 +54,7 @@ module.exports = {
             }
         ]
     },
-    serve: {
-        content: path.join(__dirname, 'build')
+    devServer: {
+        contentBase: [path.join(__dirname, 'build'), path.join(__dirname, 'assets')]
     }
 };
