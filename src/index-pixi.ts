@@ -29,12 +29,12 @@ PIXI.loader.add([entities, dungeon]).load(() => {
     const frame2 = new PIXI.Rectangle(96, 0, 16, 16);
 
     const texture = new PIXI.Texture(
-        PIXI.loader.resources['entities'].texture,
+        PIXI.loader.resources.entities.texture.baseTexture,
         frame
     );
 
     const texture2 = new PIXI.Texture(
-        PIXI.loader.resources['entities'].texture,
+        PIXI.loader.resources.entities.texture.baseTexture,
         frame2
     );
 
