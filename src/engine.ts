@@ -36,7 +36,7 @@ const gameState: GameState = GameState.PlayerTurn;
 
 let lastTurnTime = Date.now();
 
-function makePlayerTurn(
+export function makePlayerTurn(
     entities: Entities,
     mapTiles: Map<Tile>,
     player: Entity,
