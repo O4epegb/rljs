@@ -1,0 +1,62 @@
+$brown: #8f5902;
+$blue: #729fcf;
+$grey: #eeeeec;
+$yellow: #fce94f;
+$grey2: #babdb6;
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+canvas {
+    display: block;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.render-zone {
+    border: 1px solid white;
+}
+
+.map {
+    color: white;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    line-height: 20px;
+    text-align: center;
+    user-select: none;
+
+    &-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        &_blacked {
+            background-color: #000;
+        }
+
+        &_not-in-fov {
+            opacity: 0.3;
+        }
+    }
+}

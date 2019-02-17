@@ -1,8 +1,34 @@
-import { directionKeys, keyToDir, Direction } from './constants';
+import { Direction } from './constants';
+
+function getKeyToDirection(): Record<string, Direction> {
+    const up: Direction = [0, -1];
+    const right: Direction = [1, 0];
+    const down: Direction = [0, 1];
+    const left: Direction = [-1, 0];
+
+    return {
+        ArrowUp: up,
+        ArrowRight: right,
+        ArrowDown: down,
+        ArrowLeft: left,
+        k: up,
+        l: right,
+        j: down,
+        h: left,
+        u: [1, -1],
+        n: [1, 1],
+        y: [-1, -1],
+        b: [-1, 1],
+        101: [0, 0]
+    };
+}
+
+const keyToDir = getKeyToDirection();
+const directionKeys = Object.keys(keyToDir);
 
 class ControlsManagerClass {
     pressedKeys = {};
-    modifiers = {
+    activeModifiers = {
         shift: false,
         ctrl: false,
         alt: false,
@@ -11,7 +37,7 @@ class ControlsManagerClass {
     mouseX = 0;
     mouseY = 0;
 
-    MODIFIERS = ['shift', 'ctrl', 'alt', 'meta'];
+    MODIFIERS = Object.keys(this.activeModifiers);
     ALIAS = {
         left: 37,
         up: 38,
@@ -29,32 +55,33 @@ class ControlsManagerClass {
         document.addEventListener('mousemove', this.onMouseMove);
     }
 
-    onKeyDown = event => {
-        this.onKeyChange(event, true);
-    };
-
-    onKeyUp = event => {
-        this.onKeyChange(event, false);
-    };
-
     destroy = () => {
         document.removeEventListener('keydown', this.onKeyDown);
         document.removeEventListener('keyup', this.onKeyUp);
         document.removeEventListener('mousemove', this.onMouseMove);
     };
 
-    onMouseMove = event => {
+    onKeyDown = (event: KeyboardEvent) => {
+        this.onKeyChange(event, true);
+    };
+
+    onKeyUp = (event: KeyboardEvent) => {
+        this.onKeyChange(event, false);
+    };
+
+    onMouseMove = (event: MouseEvent) => {
         this.mouseX = event.clientX;
         this.mouseY = event.clientY;
     };
 
-    onKeyChange = (event, pressed) => {
-        const keyCode = event.keyCode;
+    onKeyChange = (event: KeyboardEvent, pressed: boolean) => {
+        const keyCode = event.key;
+
         this.pressedKeys[keyCode] = pressed;
-        this.modifiers.shift = event.shiftKey;
-        this.modifiers.ctrl = event.ctrlKey;
-        this.modifiers.alt = event.altKey;
-        this.modifiers.meta = event.metaKey;
+        this.activeModifiers.shift = event.shiftKey;
+        this.activeModifiers.ctrl = event.ctrlKey;
+        this.activeModifiers.alt = event.altKey;
+        this.activeModifiers.meta = event.metaKey;
     };
 
     pressed = (keyDesc: string): boolean => {
@@ -62,15 +89,17 @@ class ControlsManagerClass {
 
         for (let i = 0; i < keys.length; i++) {
             const key = keys[i];
-            let pressed;
+            let pressed = false;
 
             if (this.MODIFIERS.indexOf(key) !== -1) {
-                pressed = this.modifiers[key];
+                pressed = this.activeModifiers[key];
             } else if (Object.keys(this.ALIAS).indexOf(key) !== -1) {
+                // TODO ALIAS should be array for multiple keys
                 pressed = this.pressedKeys[this.ALIAS[key]];
             } else {
                 pressed = this.pressedKeys[key.toUpperCase().charCodeAt(0)];
             }
+
             if (!pressed) {
                 return false;
             }
@@ -82,11 +111,7 @@ class ControlsManagerClass {
     getDirection = (): Direction | null => {
         const pressedKey = directionKeys.find(key => this.pressedKeys[key]);
 
-        if (pressedKey) {
-            return keyToDir[pressedKey];
-        } else {
-            return null;
-        }
+        return pressedKey ? keyToDir[pressedKey] : null;
     };
 }
 

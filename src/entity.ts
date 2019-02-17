@@ -2,8 +2,8 @@ import { reduce } from 'lodash';
 // import * as ROT from 'rot-js';
 
 interface EntityParams {
-    char: string;
     name: string;
+    renderOrder?: number;
     isEnemy?: boolean;
     position?: PositionComponent;
     ai?: AIComponent;
@@ -17,16 +17,26 @@ interface EntityParams {
 }
 
 export class AppearanceComponent {
+    char: string;
     spriteIndexRight: number;
     spriteIndexLeft: number;
 
-    constructor(spriteIndexRight: number, spriteIndexLeft?: number) {
+    constructor({
+        char = '?',
+        spriteIndexRight,
+        spriteIndexLeft
+    }: {
+        char: string;
+        spriteIndexRight: number;
+        spriteIndexLeft?: number;
+    }) {
+        this.char = char;
         this.spriteIndexRight = spriteIndexRight;
         this.spriteIndexLeft =
             spriteIndexLeft === undefined ? spriteIndexRight : spriteIndexLeft;
     }
 
-    getSpriteIndex(isFacingLeft) {
+    getSpriteIndex(isFacingLeft: boolean) {
         return isFacingLeft ? this.spriteIndexLeft : this.spriteIndexRight;
     }
 }
@@ -156,7 +166,6 @@ export class DoorComponent {
 
 export type Entities = Array<Entity>;
 export class Entity {
-    char;
     name;
     renderOrder = 0;
     isEnemy: boolean;
@@ -171,9 +180,8 @@ export class Entity {
     appearance?: AppearanceComponent;
     door?: DoorComponent;
 
-    constructor(params: EntityParams & Record<string, any>) {
+    constructor(params: EntityParams) {
         const {
-            char,
             name,
             renderOrder = 1,
             isEnemy = false,
@@ -188,7 +196,6 @@ export class Entity {
             door
         } = params;
 
-        this.char = char;
         this.name = name;
         this.renderOrder = renderOrder;
         this.isEnemy = isEnemy;

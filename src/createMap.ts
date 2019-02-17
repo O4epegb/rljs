@@ -9,6 +9,7 @@ const floorTileIndexes = [23, 24, 36, 49];
 
 export type Tiles = Array<Tile>;
 export class Tile {
+    char: string;
     type: TileType;
     isExplored = false;
     isBlocker: boolean;
@@ -19,6 +20,7 @@ export class Tile {
 
     constructor(type: TileType, isBlocker = false, isLightBlocker?: boolean) {
         this.type = type;
+        this.char = type === TileType.Floor ? '.' : ' ';
         this.isBlocker = isBlocker;
         this.isLightBlocker =
             isLightBlocker === undefined ? isBlocker : isLightBlocker;
@@ -31,8 +33,8 @@ export enum TileType {
 }
 
 export function createMap(
-    width,
-    height
+    width: number,
+    height: number
 ): {
     rotMap: Digger;
     mapTiles: Map<Tile>;

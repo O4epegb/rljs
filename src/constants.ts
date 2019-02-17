@@ -8,23 +8,25 @@ const browserScreenHeight =
     document.documentElement.clientHeight ||
     document.body.clientHeight;
 
-export const mapWidth = 40;
-export const mapHeight = 40;
+export const mapWidth = 80;
+export const mapHeight = 80;
 
-export const tileSize = 16;
+export const spriteTileSize = 16;
+export const tileSize = 20;
 export const scaleFactor = 3;
 
-// const screenWidthPixels =
-//     browserScreenWidth - (browserScreenWidth % (tileSize * scaleFactor));
-// const screenHeightPixels =
-//     browserScreenHeight - (browserScreenHeight % (tileSize * scaleFactor));
-// export const screenWidth = screenWidthPixels / tileSize;
-// export const screenHeight = screenHeightPixels / tileSize;
-
-const screenWidthPixels = browserScreenWidth;
-const screenHeightPixels = browserScreenHeight;
-export const screenWidth = Math.ceil(screenWidthPixels / tileSize);
-export const screenHeight = Math.ceil(screenHeightPixels / tileSize);
+const screenPadding = 2;
+const screenWidthPixels = browserScreenWidth - screenPadding;
+const screenHeightPixels = browserScreenHeight - screenPadding;
+export const useDynamicScreen = true;
+export const screenWidth = Math.min(
+    useDynamicScreen ? Math.floor(screenWidthPixels / tileSize) : 20,
+    mapWidth
+);
+export const screenHeight = Math.min(
+    useDynamicScreen ? Math.floor(screenHeightPixels / tileSize) : 20,
+    mapHeight
+);
 
 export const TILES = {
     PLAYER: {
@@ -45,17 +47,3 @@ export const TILES = {
 
 type DirectionNumber = -1 | 0 | 1;
 export type Direction = [DirectionNumber, DirectionNumber];
-
-export const keyToDir: Record<string, Direction> = {
-    104: [0, -1],
-    105: [1, -1],
-    102: [1, 0],
-    99: [1, 1],
-    98: [0, 1],
-    97: [-1, 1],
-    100: [-1, 0],
-    103: [-1, -1],
-    101: [0, 0]
-};
-
-export const directionKeys = Object.keys(keyToDir);
